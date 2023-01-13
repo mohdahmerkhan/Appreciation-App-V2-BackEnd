@@ -69,12 +69,11 @@ public class AppRestController
 	}
 	
 	//Add User
-	@PostMapping("users")
+	@PostMapping("user")
 	public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO)
 	{
 		System.out.println("Inserting a User Record");
-		User user = new User(userDTO);
-		return new ResponseEntity<User>(userService.addUser(user),HttpStatus.OK);
+		return new ResponseEntity<User>(userService.addUser(userDTO),HttpStatus.OK);
 	}
 	
 	//Update User
@@ -103,6 +102,13 @@ public class AppRestController
 	public List<Role> findAllRole()
 	{
 		return roleService.findAllRoles();
+	}
+	
+	//Add Role
+	@PostMapping("role")
+	public Role addRole(@RequestBody Role role)
+	{
+		return roleService.addRole(role);
 	}
 	
 	//List all Templates
@@ -165,7 +171,7 @@ public class AppRestController
 	
 	
 	//Add Appreciation
-	@PostMapping("appreciations")
+	@PostMapping("appreciation")
 	public ResponseEntity<Appreciation> addAppreciation(@RequestBody AppreciationDTO appreciationDTO)
 	{
 		System.out.println("Inserting a Appreciation Record");

@@ -31,8 +31,7 @@ public class User
 	@Column(nullable = false)
 	private String password;
 	private String fullName;
-	private boolean isActive;
-	
+	private boolean isActive = true;
 	//@JoinColumn				//User.roleID = Role.roleID
 	@JoinColumn(name = "roleID")
 	@ManyToOne
@@ -63,7 +62,6 @@ public class User
 		this.fullName = userDTO.getFullName();
 		this.isActive =  userDTO.isActive();
 		this.role = new Role();
-		this.role.setRoleID(userDTO.getRoleID());
 	}
 
 

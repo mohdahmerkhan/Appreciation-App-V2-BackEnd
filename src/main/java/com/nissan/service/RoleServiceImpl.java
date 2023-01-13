@@ -1,6 +1,7 @@
 package com.nissan.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,5 +22,22 @@ public class RoleServiceImpl implements IRoleService
 	{
 		return (List<Role>)roleRepo.findAll();
 	}
+	
+	//Find All
+	@Override
+	public Optional<Role> findRoleByroleID(int roleID)
+	{
+		return roleRepo.findById(roleID);
+	}
+	
+	//Add Role
+	@Override
+	public Role addRole(Role role)
+	{
+		return roleRepo.save(role);
+	}
+	
+	
+	
 
 }

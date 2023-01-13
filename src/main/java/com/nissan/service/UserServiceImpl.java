@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.nissan.dto.FetchUserDTO;
+import com.nissan.dto.UserDTO;
 import com.nissan.model.User;
+import com.nissan.repo.IRoleRepo;
 import com.nissan.repo.IUserRepo;
 
 @Service
@@ -17,6 +19,9 @@ public class UserServiceImpl implements IUserService
 	//Field Injection
 	@Autowired
 	IUserRepo userRepo;
+
+	@Autowired
+	IRoleRepo roleRepo;
 	
 	//Find All
 	@Override
@@ -73,7 +78,6 @@ public class UserServiceImpl implements IUserService
 			{
 				return _user;
 			}
-			
 			return null;
 		}
 
@@ -84,17 +88,11 @@ public class UserServiceImpl implements IUserService
 	//Add User
 	@Transactional
 	@Override
-	public User addUser(User user)
-	{
-//		//Setting User Active
-//		user.setActive(true);
-//		
-//		//Setting Role of the user As Customer
-//		Role tempRole = new Role();
-//		tempRole.setRoleID(3);
-//		tempRole.setRoleName("Customer");
-//		user.setRole(tempRole);
-		
+	public User addUser(UserDTO userDTO)
+	{	
+		User user = new User(userDTO);
+		user.setRole(roleRepo.findRoleByRoleID(userDTO.getRoleID()));
+		user.setActive(true);
 		return userRepo.save(user);
 	}
 

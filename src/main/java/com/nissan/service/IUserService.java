@@ -3,6 +3,7 @@ package com.nissan.service;
 import java.util.List;
 
 import com.nissan.dto.FetchUserDTO;
+import com.nissan.dto.UserDTO;
 import com.nissan.model.User;
 
 public interface IUserService
@@ -20,7 +21,7 @@ public interface IUserService
 	User findByEmailAndPassword(String email, String password);
 	
 	//Insert User
-	User addUser(User user);
+	User addUser(UserDTO user);
 	
 	//Update User
 	User updateUser(User user);

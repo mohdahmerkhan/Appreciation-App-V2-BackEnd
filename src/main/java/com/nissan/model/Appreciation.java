@@ -31,12 +31,8 @@ public class Appreciation
 	
 	private int[] ccTo;
 	private String[] tags;
-	
-	@Column(columnDefinition="boolean default false")
-	private boolean isApproved;
-	
-	@Column(columnDefinition="boolean default true")
-	private boolean isActive;
+	private boolean isApproved = false;
+	private boolean isActive = true;
 	
 	//@JoinColumn				//User.userID = Appreciation.recommendByID
 	@JoinColumn(name = "recommendByID")
