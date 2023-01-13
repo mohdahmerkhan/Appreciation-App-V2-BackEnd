@@ -31,6 +31,7 @@ public class User
 	@Column(nullable = false)
 	private String password;
 	private String fullName;
+	private int score = 0;
 	private boolean isActive = true;
 	//@JoinColumn				//User.roleID = Role.roleID
 	@JoinColumn(name = "roleID")
@@ -66,7 +67,7 @@ public class User
 
 
 	//Parameterized Constructor
-	public User(int userID, String email, String password, String fullName, boolean isActive, Role role,
+	public User(int userID, String email, String password, String fullName, int score, boolean isActive, Role role,
 			List<Appreciation> appreciations)
 	{
 		super();
@@ -74,6 +75,7 @@ public class User
 		this.email = email;
 		this.password = password;
 		this.fullName = fullName;
+		this.score = score;
 		this.isActive = isActive;
 		this.role = role;
 		this.appreciations = appreciations;
@@ -148,6 +150,14 @@ public class User
 
 	public void setAppreciations(List<Appreciation> appreciations) {
 		this.appreciations = appreciations;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 	
 	

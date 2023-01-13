@@ -122,6 +122,9 @@ public class AppreciationServiceImpl implements IAppreciationService {
 		//Setting Creation Date
 		appreciation.setCreatedDate(LocalDateTime.now());
 		
+		//Updating Score By +10
+		appreciation.getUser().setScore(appreciation.getUser().getScore() + 10);
+		
 		//Saving Object in Database
 		appreciation = appreciationRepo.save(appreciation);
 		

@@ -175,7 +175,6 @@ public class AppRestController
 	public ResponseEntity<Appreciation> addAppreciation(@RequestBody AppreciationDTO appreciationDTO)
 	{
 		System.out.println("Inserting a Appreciation Record");
-		
 		return new ResponseEntity<Appreciation>(appreciationService.addAppreciation(appreciationDTO),HttpStatus.OK);
 	}
 	
@@ -194,7 +193,6 @@ public class AppRestController
 		System.out.println("Disabling a Appreciation Record");
 		appreciationService.disableAppreciation(apprID);
 	}
-	
 }
 
 
