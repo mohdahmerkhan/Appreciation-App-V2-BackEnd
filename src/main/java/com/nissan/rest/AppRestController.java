@@ -17,9 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nissan.dto.AppreciationDTO;
+import com.nissan.dto.CommentDTO;
 import com.nissan.dto.FetchUserDTO;
+import com.nissan.dto.LikeDTO;
 import com.nissan.dto.UserDTO;
 import com.nissan.model.Appreciation;
+import com.nissan.model.Comment;
+import com.nissan.model.Like;
 import com.nissan.model.Role;
 import com.nissan.model.Template;
 import com.nissan.model.User;
@@ -28,171 +32,198 @@ import com.nissan.service.IRoleService;
 import com.nissan.service.ITemplateService;
 import com.nissan.service.IUserService;
 
-
-@CrossOrigin		//Helps to Avoid CORS Error
+@CrossOrigin // Helps to Avoid CORS Error
 @RestController
 @RequestMapping("api/")
-public class AppRestController
-{
-	//Field Injection
+public class AppRestController {
+	// Field Injection
 	@Autowired
 	IUserService userService;
-	
+
 	@Autowired
 	IRoleService roleService;
-	
+
 	@Autowired
 	IAppreciationService appreciationService;
-	
+
 	@Autowired
 	ITemplateService templateService;
-	
-	//List all Users
+
+	// List all Users
 	@GetMapping("users")
-	public List<User> findAllUser()
-	{
+	public List<User> findAllUser() {
 		return userService.findAllUsers();
 	}
-	
-	//List all Staffs
+
+	// List all Staffs
 	@GetMapping("staffs")
-	public List<FetchUserDTO> findAllStaffs()
-	{
+	public List<FetchUserDTO> findAllStaffs() {
 		return userService.findAllStaffs();
 	}
-	
-	//List all Approvers
+
+	// List all Approvers
 	@GetMapping("approvers")
-	public List<FetchUserDTO> findAllApprovers()
-	{
+	public List<FetchUserDTO> findAllApprovers() {
 		return userService.findAllApprovers();
 	}
-	
-	//Add User
+
+	// Add User
 	@PostMapping("user")
-	public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO)
-	{
+	public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO) {
 		System.out.println("Inserting a User Record");
-		return new ResponseEntity<User>(userService.addUser(userDTO),HttpStatus.OK);
+		return new ResponseEntity<User>(userService.addUser(userDTO), HttpStatus.OK);
 	}
-	
-	//Update User
+
+	// Update User
 	@PutMapping("users")
-	public User updateUser(@RequestBody UserDTO userDTO)
-	{
+	public User updateUser(@RequestBody UserDTO userDTO) {
 		System.out.println("Updating a User Record");
 		User user = new User(userDTO);
 		return userService.updateUser(user);
 	}
-	
-	
-	//Delete(Actually Disable) User
+
+	// Delete(Actually Disable) User
 	@PutMapping("users/{userID}")
-	public void deleteUser(@PathVariable int userID)
-	{
+	public void deleteUser(@PathVariable int userID) {
 		System.out.println("Disabling the record");
 		userService.deleteUser(userID);
-		//return userService.;
+		// return userService.;
 	}
-	
-	
-	
-	//List all Roles
+
+	// List all Roles
 	@GetMapping("roles")
-	public List<Role> findAllRole()
-	{
+	public List<Role> findAllRole() {
 		return roleService.findAllRoles();
 	}
-	
-	//Add Role
+
+	// Add Role
 	@PostMapping("role")
-	public Role addRole(@RequestBody Role role)
-	{
+	public Role addRole(@RequestBody Role role) {
 		return roleService.addRole(role);
 	}
-	
-	//List all Templates
+
+	// List all Templates
 	@GetMapping("templates")
-	public List<Template> findAllTemplates()
-	{
+	public List<Template> findAllTemplates() {
 		return templateService.findAllTemplates();
 	}
-	
-	//Add Templates
+
+	// Add Templates
 	@PostMapping("template")
-	public Template addTemplate(@RequestBody Template template)
-	{
+	public Template addTemplate(@RequestBody Template template) {
 		return templateService.addTemplate(template);
 	}
-	
-	//Update Templates
+
+	// Update Templates
 	@PutMapping("template")
-	public Template updateTemplate(@RequestBody Template template)
-	{
+	public Template updateTemplate(@RequestBody Template template) {
 		return templateService.updateTemplate(template);
 	}
-	
-	//List all Appreciations
+
+	// List all Appreciations
 	@GetMapping("appreciations")
-	public List<Appreciation> findAllAppreciations()
-	{
+	public List<Appreciation> findAllAppreciations() {
 		return appreciationService.findAllAppreciations();
 	}
 
-	//List all Appreciations filtered by roleID
+	// List all Appreciations filtered by roleID
 	@GetMapping("appreciations/{email}&{roleID}")
-	public List<Appreciation> findAllFilteredAppreciations(@PathVariable String email, @PathVariable int roleID)
-	{
+	public List<Appreciation> findAllFilteredAppreciations(@PathVariable String email, @PathVariable int roleID) {
 		return appreciationService.findAllFilteredAppreciations(email, roleID);
 	}
-	
-	//List all Appreciations
+
+	// List all Appreciations
 	@GetMapping("appreciationsByApproval/{email}&{roleID}&{approved}")
-	public List<Appreciation> findAllAppreciations(@PathVariable String email, @PathVariable int roleID, @PathVariable boolean approved)
-	{
+	public List<Appreciation> findAllAppreciations(@PathVariable String email, @PathVariable int roleID,
+			@PathVariable boolean approved) {
 		return appreciationService.findAllAppreciationsByApproval(email, roleID, approved);
 	}
-	
-	//Get Appreciation By ApprID
+
+	// Get Appreciation By ApprID
 	@GetMapping("appreciation/{apprID}")
-	public Optional<Appreciation> findAppreciationByApprID(@PathVariable int apprID)
-	{
+	public Optional<Appreciation> findAppreciationByApprID(@PathVariable int apprID) {
 		return appreciationService.findAppreciationByApprID(apprID);
 	}
 
-	
 	@GetMapping("userLogin/{email}&{password}")
-	public User findUserByEmailAndPassword(@PathVariable String email, @PathVariable String password)
-	{
+	public User findUserByEmailAndPassword(@PathVariable String email, @PathVariable String password) {
 		System.out.println("Inside Controller");
 		return userService.findByEmailAndPassword(email, password);
 	}
-	
-	
-	
-	//Add Appreciation
+
+	// Add Appreciation
 	@PostMapping("appreciation")
-	public ResponseEntity<Appreciation> addAppreciation(@RequestBody AppreciationDTO appreciationDTO)
-	{
+	public ResponseEntity<Appreciation> addAppreciation(@RequestBody AppreciationDTO appreciationDTO) {
 		System.out.println("Inserting a Appreciation Record");
-		return new ResponseEntity<Appreciation>(appreciationService.addAppreciation(appreciationDTO),HttpStatus.OK);
+		return new ResponseEntity<Appreciation>(appreciationService.addAppreciation(appreciationDTO), HttpStatus.OK);
 	}
-	
-	//Update Appreciation
+
+	// Update Appreciation
 	@PutMapping("appreciations/{apprID}")
-	public void updateAppreciation(@PathVariable int apprID)
-	{
+	public void updateAppreciation(@PathVariable int apprID) {
 		System.out.println("Approving an Appreciation Record");
 		appreciationService.updateAppreciation(apprID);
 	}
-	
-	//Disable Appreciation
+
+	// Disable Appreciation
 	@DeleteMapping("appreciations/{apprID}")
-	public void disableAppreciation(@PathVariable int apprID)
-	{
+	public void disableAppreciation(@PathVariable int apprID) {
 		System.out.println("Disabling a Appreciation Record");
 		appreciationService.disableAppreciation(apprID);
 	}
+
+	// List all Likes
+	@GetMapping("likes")
+	public List<Like> findAllLike() {
+		return appreciationService.findAllLikes();
+	}
+
+	// Get Likes By LikeID
+	@GetMapping("like/{likeID}")
+	public Optional<Like> findLikeByLikeID(@PathVariable int likeID) {
+		return appreciationService.findLikeByLikeID(likeID);
+	}
+
+	// Add Like
+	@PostMapping("like")
+	public Like addLike(@RequestBody LikeDTO likeDTO) {
+		return appreciationService.addLike(likeDTO);
+	}
+
+	// Delete Like
+	@DeleteMapping("like/{likeID}")
+	public void deleteLike(@PathVariable int likeID) {
+		appreciationService.deleteLike(likeID);
+	}
+
+	// List all Comments
+	@GetMapping("comments")
+	public List<Comment> findAllComments() {
+		return appreciationService.findAllComments();
+	}
+
+	// Get Likes By commentID
+	@GetMapping("comment/{commentID}")
+	public Optional<Comment> findCommentByCommentID(@PathVariable int commentID) {
+		return appreciationService.findCommentByCommentID(commentID);
+	}
+
+	// Add Comment
+	@PostMapping("comment")
+	public Comment addComment(@RequestBody CommentDTO commentDTO) {
+		return appreciationService.addComment(commentDTO);
+	}
+
+	// Update Comment
+	@PutMapping("comment")
+	public Comment updateComment(@RequestBody CommentDTO commentDTO) {
+		return appreciationService.updateComment(commentDTO);
+	}
+
+	// Delete Comment
+	@DeleteMapping("comment/{commentID}")
+	public void deletComment(@PathVariable int commentID) {
+		appreciationService.deleteComment(commentID);
+	}
+
 }
-
-

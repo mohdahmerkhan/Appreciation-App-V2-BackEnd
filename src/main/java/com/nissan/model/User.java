@@ -33,6 +33,7 @@ public class User
 	private String fullName;
 	private int score = 0;
 	private boolean isActive = true;
+	
 	//@JoinColumn				//User.roleID = Role.roleID
 	@JoinColumn(name = "roleID")
 	@ManyToOne
