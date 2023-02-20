@@ -13,5 +13,8 @@ public interface ICommentRepo extends JpaRepositoryImplementation<Comment, Integ
 	public Comment findCommentByCommentID(int commentID);
 	
 	@Query("from Comment where replyOn.commentID = ?1")
-	public List<Comment> findAllCommentWithReplyOn(int commentID);
+	public List<Comment> findAllCommentWithReplyOn(int replyOnID);
+
+	@Query("from Comment where appreciation.apprID = ?1 and replyOn is null")
+	public List<Comment> findAllFirstCommentByApprID(int apprID);
 }

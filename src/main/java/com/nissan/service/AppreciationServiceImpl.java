@@ -210,6 +210,11 @@ public class AppreciationServiceImpl implements IAppreciationService {
 	public List<Like> findAllLikes() {
 		return likesRepo.findAll();
 	}
+	
+	@Override
+	public List<Like> findAllLikeByApprID(int apprID) {
+		return likesRepo.findAllLikeByApprID(apprID);
+	}
 
 	@Override
 	public Optional<Like> findLikeByLikeID(int likeID) {
@@ -234,6 +239,16 @@ public class AppreciationServiceImpl implements IAppreciationService {
 	@Override
 	public List<Comment> findAllComments() {
 		return commentRepo.findAll();
+	}
+	
+	@Override
+	public List<Comment> findAllFirstCommentByApprID(int apprID) {
+		return commentRepo.findAllFirstCommentByApprID(apprID);
+	}
+	
+	@Override
+	public List<Comment> findCommentByReplyOnID(int replyOnID) {
+		return commentRepo.findAllCommentWithReplyOn(replyOnID);
 	}
 
 	@Override
@@ -276,9 +291,4 @@ public class AppreciationServiceImpl implements IAppreciationService {
 		commentRepo.deleteById(commentID);
 		return;
 	}
-	
-	
-	
-	
-	
 }

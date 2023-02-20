@@ -37,6 +37,9 @@ public interface IAppreciationService {
 
 	// Find All Likes
 	List<Like> findAllLikes();
+	
+	//Find All Likes for an Appreciation
+	List<Like> findAllLikeByApprID(int apprID);
 
 	// Find Like By likeID
 	Optional<Like> findLikeByLikeID(int likeID);
@@ -61,4 +64,11 @@ public interface IAppreciationService {
 
 	// Delete Comment
 	void deleteComment(int commentID);
+
+	//Find All Comments by replyOnID
+	List<Comment> findCommentByReplyOnID(int replyOnID);
+
+	//Find All First Comment
+	List<Comment> findAllFirstCommentByApprID(int apprID);
+
 }

@@ -184,6 +184,12 @@ public class AppRestController {
 		return appreciationService.findLikeByLikeID(likeID);
 	}
 
+	// List all Likes by ApprID
+	@GetMapping("likes/appreciation/{apprID}")
+	public List<Like> findAllLikeByApprID(@PathVariable int apprID) {
+		return appreciationService.findAllLikeByApprID(apprID);
+	}
+
 	// Add Like
 	@PostMapping("like")
 	public Like addLike(@RequestBody LikeDTO likeDTO) {
@@ -202,10 +208,22 @@ public class AppRestController {
 		return appreciationService.findAllComments();
 	}
 
-	// Get Likes By commentID
+	// List all Comments By ApprID
+	@GetMapping("comments/appreciation/{apprID}")
+	public List<Comment> findAllFirstCommentByApprID(@PathVariable int apprID) {
+		return appreciationService.findAllFirstCommentByApprID(apprID);
+	}
+
+	// Get Comment By commentID
 	@GetMapping("comment/{commentID}")
 	public Optional<Comment> findCommentByCommentID(@PathVariable int commentID) {
 		return appreciationService.findCommentByCommentID(commentID);
+	}
+
+	// Get All Comments By replyOnID
+	@GetMapping("comments/reply/{replyOnID}")
+	public List<Comment> findCommentByReplyOnID(@PathVariable int replyOnID) {
+		return appreciationService.findCommentByReplyOnID(replyOnID);
 	}
 
 	// Add Comment
